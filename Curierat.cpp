@@ -1,5 +1,5 @@
 #include <iostream>
-#include "GrafNeorientat.h"
+#include "GrafOrientatCuCosturi.h"
 
 using namespace std;
 
@@ -8,8 +8,9 @@ using namespace std;
 int main()
 {
 
-	Graf *G = new GrafNeorientat();
 	
+	GrafOrientatCuCosturi<int> G;
+
 	return 0;
 }
 

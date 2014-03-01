@@ -18,7 +18,7 @@ class Graf
 	
 	public:
 
-		virtual void adaugaMuchie(const int&x, const int& y) = 0;
+		virtual void adaugaMuchie(const int&x, const int& y);
 
 	//	friend istream& operator >> (istream& in, Graf& G);
 	

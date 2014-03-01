@@ -20,7 +20,7 @@ class Graf
 
 		virtual void adaugaMuchie(const int&x, const int& y);
 
-	//	friend istream& operator >> (istream& in, Graf& G);
+		friend istream& operator >> (istream& in, Graf& G);
 	
 		vector<int> dfs(const int& root);
 

@@ -5,7 +5,7 @@ using namespace std;
 
 class Firma
 {
-	Vehicul *flotaVehicule;
+	Vehicul< pair<int,int> > *flotaVehicule;
 	double balantaBani;
 	int comenziReusite;
 	int comenziEsuate;

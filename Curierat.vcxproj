@@ -80,10 +80,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Avion.h" />
+    <ClInclude Include="Camion.h" />
     <ClInclude Include="Comanda.h" />
     <ClInclude Include="Duba.h" />
     <ClInclude Include="Firma.h" />
+    <ClInclude Include="GeneratorComenzi.h" />
     <ClInclude Include="Graf.h" />
+    <ClInclude Include="GrafCuCosturi.h" />
     <ClInclude Include="GrafOrientat.h" />
     <ClInclude Include="GrafOrientatCuCosturi.h" />
     <ClInclude Include="Lista.h" />
@@ -97,7 +100,6 @@
   <ItemGroup>
     <ClCompile Include="Curierat.cpp" />
     <ClCompile Include="Graf.cpp" />
-    <ClCompile Include="GrafOrienatCuCosturi.cpp" />
     <ClCompile Include="GrafOrientat.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>

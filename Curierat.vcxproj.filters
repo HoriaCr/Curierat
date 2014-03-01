@@ -60,6 +60,15 @@
     <ClInclude Include="GrafOrientatCuCosturi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GrafCuCosturi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratorComenzi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -72,9 +81,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GrafOrientat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GrafOrienatCuCosturi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

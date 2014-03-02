@@ -6,6 +6,7 @@
 #include "Masina.h"
 #include "Scuter.h"
 #include "Comanda.h"
+#include "GrafCuCosturi.h"
 
 
 using namespace std;
@@ -68,7 +69,7 @@ class Firma
 
 		void primesteComanda(const Comanda<PositionType>& comanda);
 
-		void atribuieComenzi();
+		void atribuieComenzi(const Graf& graf);
 
 };
 
@@ -139,6 +140,13 @@ void Firma<PositionType>::primesteComanda(const Comanda<PositionType>& comanda) 
 }
 
 template<class PositionType>
-void Firma<PositionType>::atribuieComenzi() {
+void Firma<PositionType>::atribuieComenzi(const Graf& graf) {
+	while (!coada.empty()) {
+		Comanda<PositionType> c = coada.front();
+		coada.pop();
+		for (auto& vehicul : flotaVehicule) {
 
+		}
+		
+	}
 }

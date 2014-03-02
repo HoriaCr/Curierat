@@ -1,6 +1,8 @@
 #include <vector>
 #include <queue>
 
+#pragma once
+
 using namespace std;
 
 class Graf

@@ -29,7 +29,7 @@ public:
 			}
 
 			if (s % 3600 == 0) {
-				firma->atribuieComenzi();
+				firma->atribuieComenzi(*graf);
 			}
 		}
 	}

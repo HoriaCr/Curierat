@@ -1,6 +1,7 @@
 #include "Graf.h"
 #include <ctime>
 #include <cstdlib>
+#pragma once
 
 template<class DataType>
 class GrafCuCosturi : public Graf

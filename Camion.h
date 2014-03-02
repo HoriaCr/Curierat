@@ -4,6 +4,8 @@
 template<class PositionType>
 class Camion : public Vehicul<PositionType>
 {
+	int tipCombustibil;
+
 	public:
 	
 		Camion();
@@ -24,6 +26,20 @@ Camion<PositionType>::Camion() : Vehicul(PositionType(),
 			24000,
 		   	500,
 			250,
-			90000) {}
+			90000) {
+	tipCombustibil = 1;
+}
+
+
+template<class PositionType>
+double Camion<PositionType>::valoareCurenta() {
+	return valoareInitiala - uzura / 100.0 * valoareInitiala;
+}
+
+template<class PositionType>
+double Camion<PositionType>::consumCombustibil(const double& distanta) {
+	return distanta * tipCombustibil;
+}
+
 
 

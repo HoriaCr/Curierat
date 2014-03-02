@@ -5,7 +5,6 @@ class Vehicul
 {
 	protected:
 
-
 		PositionType pozitie;
 
 		double kilometraj;
@@ -14,7 +13,7 @@ class Vehicul
 		int greutateMaxima;
 		int capacitateRezervor;
 		float combustibilCurent;
-		int valoareInitiala;
+		double valoareInitiala;
 
 		int greutateCurenta;
 		int volumCurent;
@@ -25,25 +24,29 @@ class Vehicul
 
 	public:
 
-		Vehicul(PositionType pozitie_,
-			double kilometraj_,
-			float vitezaMedie_,
-			int volumMaxim_,
-			int greutateMaxima_,
-			int capacitateRezervor_,
-			float combustibilCurent_,
-			int valoareInitiala_
+		Vehicul(PositionType pozitie_ = PositionType(),
+			double kilometraj_ = 0.0,
+			float vitezaMedie_ = 0.0,
+			int volumMaxim_ = 0,
+			int greutateMaxima_ = 0,
+			int capacitateRezervor_ = 0,
+			float combustibilCurent_ = 0.0,
+			double valoareInitiala_ = 0.0
 			);
 
-		virtual double valoareCurenta() = 0;
+		virtual double valoareCurenta() { return 0.0;  }
 
-		virtual double consumCombustibil(const double& distanta) = 0;
+		virtual double consumCombustibil(const double& distanta) { return 0.0; }
 
-		virtual void update() = 0;
+		virtual void update() {}
 
+		int getUzura();
 
 };
-
+template<class PositionType>
+int Vehicul<PositionType>::getUzura() {
+	return uzura;
+}
 
 
 template<class PositionType>
@@ -54,7 +57,7 @@ Vehicul<PositionType>::Vehicul(PositionType pozitie_,
 	int greutateMaxima_,
 	int capacitateRezervor_,
 	float combustibilCurent_,
-	int valoareInitiala_
+	double valoareInitiala_
 	) {
 	pozitie = pozitie_;
 	kilometraj = kilometraj_;

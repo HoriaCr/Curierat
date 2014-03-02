@@ -45,9 +45,11 @@ SimulatorCurierat::~SimulatorCurierat() {
 }
 
 
-
 int main()
 {
+	SimulatorCurierat S;
+	S.start(30);
+
 
 	return 0;
 }

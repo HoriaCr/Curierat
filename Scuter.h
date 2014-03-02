@@ -5,6 +5,8 @@
 template<class PositionType>
 class Scuter : public Vehicul<PositionType>
 {
+	int tipCombustibil;
+
 	public:
 
 		Scuter();
@@ -23,4 +25,19 @@ Scuter<PositionType>::Scuter() : Vehicul(PositionType(),
 	30,
 	10,
 	5,
-	1000) {}
+	1000) {
+	tipCombustibil = 1;
+}
+
+
+template<class PositionType>
+double Scuter<PositionType>::valoareCurenta() {
+	return valoareInitiala - uzura / 100.0 * valoareInitiala;
+}
+
+template<class PositionType>
+double Scuter<PositionType>::consumCombustibil(const double& distanta) {
+	return distanta * tipCombustibil;
+}
+
+

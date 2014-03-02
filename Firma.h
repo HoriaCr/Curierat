@@ -1,9 +1,11 @@
 #include <vector>
+#include <queue>
 #include "Avion.h"
 #include "Camion.h"
 #include "Duba.h"
 #include "Masina.h"
 #include "Scuter.h"
+#include "Comanda.h"
 
 
 using namespace std;
@@ -14,7 +16,8 @@ class Firma
 {
 	private:
 
-		Vehicul< PositionType > *flotaVehicule;
+		vector< Vehicul<PositionType>*>  flotaVehicule;
+		queue< Comanda<PositionType> > coada;
 
 		double balantaBani;
 		double salariuOraSofer;
@@ -35,6 +38,8 @@ class Firma
 		int comenziReusite;
 		int comenziEsuate;
 		int totalAngajati;
+
+		int tipStrategie;
 	
 
 
@@ -60,6 +65,8 @@ class Firma
 		double costuri();
 
 		double venituri();
+
+		void primesteComanda();
 
 };
 
@@ -94,34 +101,31 @@ Firma<PositionType>::Firma(double balantaBani_,
 
 	numarVehicule = numarAvioane + numarCamioane + numarDube + numarMasini + numarScutere;
 	totalAngajati = soferi + muncitori + manageri;
-	
-	flotaVehicule<PositionType> = new Vehicul<PositionType>[numarVehicule];
-
+	flotaVehicule.resize(numarVehicule);
 	for (int i = 0; i < numarAvioane; i++) {
-		flotaVehicule[i] = new Avion<int>();
+		flotaVehicule[i] = new Avion<PositionType>();
 	}
 
-	for (int i = 0; i < numarCamioane; i++ + ) {
-		flotaVehicule[i + numarAvioane] = new Camion<int>();
+	for (int i = 0; i < numarCamioane; i++) {
+		flotaVehicule[i + numarAvioane] = new Camion<PositionType>();
 	}
 
-	for (int i = 0; i < numarDube; i++ + ) {
-		flotaVehicule[i + numarAvioane + numarCamioane] = new Duba<int>();
+	for (int i = 0; i < numarDube; i++ ) {
+		flotaVehicule[i + numarAvioane + numarCamioane] = new Duba<PositionType>();
 	}
 
-	for (int i = 0; i < numarMasini; i++ + ) {
-		flotaVehicule[i + numarAvioane + numarCamioane + numarDube] = new Masina<int>();
+	for (int i = 0; i < numarMasini; i++) {
+		flotaVehicule[i + numarAvioane + numarCamioane + numarDube] = new Masina<PositionType>();
 	}
 
-	for (int i = 0; i < numarScutere; i++ + ) {
-		flotaVehicule[i + numarAvioane + numarCamioane + numarDube + numarMasini] = new Masina<int>();
+	for (int i = 0; i < numarScutere; i++) {
+		flotaVehicule[i + numarAvioane + numarCamioane + numarDube + numarMasini] = new Scuter<PositionType>();
 	}
-
+	
 }
 
 
 template<class PositionType>
 Firma<PositionType>::~Firma() {
-	delete[] flotaVehicule;
 
 }

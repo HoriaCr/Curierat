@@ -89,9 +89,7 @@
     <ClInclude Include="GrafCuCosturi.h" />
     <ClInclude Include="GrafOrientat.h" />
     <ClInclude Include="GrafOrientatCuCosturi.h" />
-    <ClInclude Include="Lista.h" />
     <ClInclude Include="Masina.h" />
-    <ClInclude Include="Nod.h" />
     <ClInclude Include="Scuter.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

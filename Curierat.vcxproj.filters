@@ -42,12 +42,6 @@
     <ClInclude Include="Avion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Lista.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Nod.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Comanda.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -21,10 +21,16 @@ public:
 	~SimulatorCurierat();
 
 	void start(const int& zile) {
-		int secunde = zile * 24 * 360;
-
+		int secunde = zile * 24 * 3600;
 		for (int s = 1; s <= secunde; s++) {
+			if (rand() % 15 == 0) {
+				Comanda<int> c = generator->urmatoareaComanda();
+				firma->primesteComanda(c);
+			}
 
+			if (s % 3600 == 0) {
+				firma->atribuieComenzi();
+			}
 		}
 	}
 

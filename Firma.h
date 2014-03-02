@@ -66,7 +66,9 @@ class Firma
 
 		double venituri();
 
-		void primesteComanda();
+		void primesteComanda(const Comanda<PositionType>& comanda);
+
+		void atribuieComenzi();
 
 };
 
@@ -127,5 +129,16 @@ Firma<PositionType>::Firma(double balantaBani_,
 
 template<class PositionType>
 Firma<PositionType>::~Firma() {
+
+}
+
+
+template<class PositionType>
+void Firma<PositionType>::primesteComanda(const Comanda<PositionType>& comanda) {
+	coada.push(comanda);
+}
+
+template<class PositionType>
+void Firma<PositionType>::atribuieComenzi() {
 
 }

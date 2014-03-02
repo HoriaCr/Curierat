@@ -8,20 +8,20 @@ public:
 
 	Masina();
 
-	int valoareCurenta();
+	double valoareCurenta();
 
-	int consumCombustibil();
+	double consumCombustibil(const double& distanta);
 };
 
 
 template<class PositionType = pair<int, int> >
-Masina<PositionType>::Masina() : Vehicul({ 0, 0 },
+Masina<PositionType>::Masina() : Vehicul(PositionType(),
 	0,
-	60,
-	10000,
-	24000,
-	500,
+	70,
+	100,
 	250,
-	90000) {}
+	3,
+	30,
+	15000) {}
 
 

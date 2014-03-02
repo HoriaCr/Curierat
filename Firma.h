@@ -3,10 +3,17 @@
 
 using namespace std;
 
+
+template<class PositionType>
 class Firma
 {
-	Vehicul< pair<int,int> > *flotaVehicule;
+	Vehicul< PositionType > *flotaVehicule;
 	double balantaBani;
+	double salariuOraSofer;
+	double salariuOraMuncitor;
+	double salariuOraManager;
+	double comenziPeZi;
+
 	int comenziReusite;
 	int comenziEsuate;
 	int totalAngajati;
@@ -15,15 +22,13 @@ class Firma
 	int muncitori;
 	int manageri;
 
-	int salariuOraSofer;
-	int salariuOraMuncitor;
-	int salariuOraManager;
 
-	double comenziPeZi;
+
 
 public:
-	int costuri();
 
-	int venituri();
+	double costuri();
+
+	double venituri();
 
 };

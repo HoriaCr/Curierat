@@ -8,20 +8,20 @@ public:
 
 	Duba();
 
-	int valoareCurenta();
+	double valoareCurenta();
 
-	int consumCombustibil();
+	double consumCombustibil(const double& distanta);
 };
 
 
 template<class PositionType = pair<int, int> >
-Duba<PositionType>::Duba() : Vehicul({ 0, 0 },
+Duba<PositionType>::Duba() : Vehicul(PositionType(),
 	0,
 	60,
-	10000,
-	24000,
-	500,
-	250,
-	90000) {}
+	1,
+	2000,
+	150,
+	90,
+	25000) {}
 
 

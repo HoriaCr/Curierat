@@ -7,17 +7,19 @@ class Camion : public Vehicul<PositionType>
 	
 		Camion();
 
-		int valoareCurenta();
+		double valoareCurenta();
 
-		int consumCombustibil();
+		double consumCombustibil(const double& distanta);
+
+		void update(PositionType& urmatoareaLocatie);
 };
 
 
 template<class PositionType = pair<int,int> >
-Camion<PositionType>::Camion() : Vehicul({ 0, 0 },
+Camion<PositionType>::Camion() : Vehicul(PositionType(),
 			0,
-			60,
-			10000,
+			50,
+			100,
 			24000,
 		   	500,
 			250,

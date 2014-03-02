@@ -1,17 +1,20 @@
 #include <iostream>
 #include "Firma.h"
 #include "GrafOrientatCuCosturi.h"
+#include "GeneratorComenzi.h"
 
 using namespace std;
 
 
 class SimulatorCurierat
 {
-	Firma firma;
-	//GeneratorComenzi G;
+	Firma<int> *firma;
+	GeneratorComenzi<int> G;
 
 
 public:
+
+	SimulatorCurierat();
 
 	void start(const int& zile) {
 		int secunde = zile * 24 * 360;

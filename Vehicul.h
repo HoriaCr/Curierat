@@ -8,12 +8,12 @@ class Vehicul
 
 		PositionType pozitie;
 
-		int kilometraj;
-		int vitezaMedie;
-		int volumMaxima;
+		double kilometraj;
+		float vitezaMedie;
+		int volumMaxim;
 		int greutateMaxima;
 		int capacitateRezervor;
-		int combustibilCurent;
+		float combustibilCurent;
 		int valoareInitiala;
 
 		int greutateCurenta;
@@ -26,18 +26,20 @@ class Vehicul
 	public:
 
 		Vehicul(PositionType pozitie_,
-			int kilometraj_,
-			int vitezaMedie_,
-			int volumMaxima_,
+			double kilometraj_,
+			float vitezaMedie_,
+			int volumMaxim_,
 			int greutateMaxima_,
 			int capacitateRezervor_,
-			int combustibilCurent_,
+			float combustibilCurent_,
 			int valoareInitiala_
 			);
 
-		virtual int valoareCurenta() = 0;
+		virtual double valoareCurenta() = 0;
 
-		virtual int consumCombustibil() = 0;
+		virtual double consumCombustibil(const double& distanta) = 0;
+
+		virtual void update() = 0;
 
 
 };
@@ -46,18 +48,18 @@ class Vehicul
 
 template<class PositionType>
 Vehicul<PositionType>::Vehicul(PositionType pozitie_,
-	int kilometraj_,
-	int vitezaMedie_,
-	int volumMaxima_,
+	double kilometraj_,
+	float vitezaMedie_,
+	int volumMaxim_,
 	int greutateMaxima_,
 	int capacitateRezervor_,
-	int combustibilCurent_,
+	float combustibilCurent_,
 	int valoareInitiala_
 	) {
 	pozitie = pozitie_;
 	kilometraj = kilometraj_;
 	vitezaMedie = vitezaMedie_;
-	volumMaxima = volumMaxima_;
+	volumMaxim = volumMaxim_;
 	greutateMaxima = greutateMaxima_;
 	capacitateRezervor = capacitateRezervor_;
 	combustibilCurent = combustibilCurent_;

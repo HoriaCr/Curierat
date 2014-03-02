@@ -7,18 +7,18 @@ class Scuter : public Vehicul<PositionType>
 
 		Scuter();
 
-		int valoareCurenta();
+		double valoareCurenta();
 
-		int consumCombustibil();
+		double consumCombustibil(const double& distanta);
 };
 
 
 template<class PositionType = pair<int, int> >
-Scuter<PositionType>::Scuter() : Vehicul({ 0, 0 },
+Scuter<PositionType>::Scuter() : Vehicul(PositionType(),
 	0,
-	60,
-	10000,
-	24000,
-	500,
-	250,
-	90000) {}
+	40,
+	1,
+	30,
+	10,
+	5,
+	1000) {}

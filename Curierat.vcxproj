@@ -99,8 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Curierat.cpp" />
-    <ClCompile Include="Graf.cpp" />
-    <ClCompile Include="GrafOrientat.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

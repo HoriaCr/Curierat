@@ -77,11 +77,5 @@
     <ClCompile Include="Curierat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Graf.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GrafOrientat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

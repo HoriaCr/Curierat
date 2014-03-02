@@ -1,5 +1,7 @@
 #include "Vehicul.h"
 
+#pragma once
+
 template<class PositionType>
 class Scuter : public Vehicul<PositionType>
 {

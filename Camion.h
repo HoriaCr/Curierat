@@ -1,5 +1,6 @@
 #include "Vehicul.h"
 
+
 template<class PositionType>
 class Camion : public Vehicul<PositionType>
 {

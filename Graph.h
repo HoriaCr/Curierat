@@ -22,7 +22,7 @@ class Graph
 
 		Graph(int vertexNumber_);
 
-		virtual void adaugaMuchie(const int&x, const int& y);
+		virtual void addEdge(const int&x, const int& y);
 
 		friend istream& operator >> (istream& in, Graph& G);
 	
@@ -77,7 +77,7 @@ vector<int> Graph::bfs(const int& root) {
 	return ret;
 }
 
-void Graph::adaugaMuchie(const int& x, const int& y) {
+void Graph::addEdge(const int& x, const int& y) {
 	data[x].push_back(y);
 	data[y].push_back(x);
 }

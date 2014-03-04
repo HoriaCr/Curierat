@@ -5,11 +5,11 @@ class GraphOrientat : public Graph
 
 public:
 
-	virtual	void adaugaMuchie(const int& x, const int& y);
+	virtual	void addEdge(const int& x, const int& y);
 
 };
 
 
-void GraphOrientat::adaugaMuchie(const int& x, const int& y) {
+void GraphOrientat::addEdge(const int& x, const int& y) {
 	data[x].push_back(y);
 }

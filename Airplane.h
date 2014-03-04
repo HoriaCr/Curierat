@@ -3,7 +3,7 @@
 template<class PositionType>
 class Airplane : public Vehicle<PositionType>
 {
-	int tipCombustibil;
+	int fuelType;
 
 	public:
 
@@ -11,7 +11,7 @@ class Airplane : public Vehicle<PositionType>
 
 		double currentValue();
 
-		double consumCombustibil(const double& distanta);
+		double fuelConsumed(const double& distanta);
 };
 
 
@@ -24,7 +24,7 @@ Airplane<PositionType>::Airplane() : Vehicle(PositionType(),
 	500,
 	250,
 	200000) {
-	tipCombustibil = 2;
+	fuelType = 2;
 }
 
 template<class PositionType>
@@ -33,8 +33,8 @@ double Airplane<PositionType>::currentValue() {
 }
 
 template<class PositionType>
-double Airplane<PositionType>::consumCombustibil(const double& distanta) {
-	return distanta * tipCombustibil;
+double Airplane<PositionType>::fuelConsumed(const double& distanta) {
+	return distanta * fuelType;
 }
 
 

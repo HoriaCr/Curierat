@@ -19,7 +19,7 @@ class DeliveryFirm
 
 		vector< Vehicle<PositionType>*>  flotaVehiclee;
 		queue< Order<PositionType> > coada;
-		Graph *Graph;
+		Graph *graph;
 
 		double balance;
 		double driverSlarary;
@@ -37,8 +37,8 @@ class DeliveryFirm
 		int workers;
 		int managers;
 
-		int ordersReusite;
-		int ordersEsuate;
+		int succeededOrders;
+		int failedOrders;
 		int employeesNumber;
 
 		int strategyType;
@@ -133,7 +133,7 @@ DeliveryFirm<PositionType>::DeliveryFirm(double balance_,
 
 template<class PositionType>
 DeliveryFirm<PositionType>::~DeliveryFirm() {
-	delete Graph;
+	//delete graph;
 }
 
 

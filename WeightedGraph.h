@@ -16,7 +16,7 @@ class WeightedGraph : public Graph
 		const vector< pair< pair<int, int>, DataType> >& muchii = {});
 
 	
-	void adaugaMuchie(const int& x, const int& y, const DataType& costMuchie);
+	void addEdge(const int& x, const int& y, const DataType& costMuchie);
 
 };
 
@@ -27,7 +27,7 @@ WeightedGraph<DataType>::WeightedGraph(const int& vertexNumber_ = 0, const int& 
 	data.resize(vertexNumber);
 	cost.resize(vertexNumber);
 	for (const auto& muchie : muchii) {
-		adaugaMuchie(muchie.first.first, muchie.first.second, muchie.second);
+		addEdge(muchie.first.first, muchie.first.second, muchie.second);
 	}
 }
 
@@ -46,14 +46,14 @@ WeightedGraph<int>::WeightedGraph(const int& vertexNumber_, const int& edgeNumbe
 				w = rand() % vertexNumber;
 			}
 		}
-		adaugaMuchie(v, w, c);
+		addEdge(v, w, c);
 	}
 }
 
 
 
 template<class DataType>
-void WeightedGraph<DataType>::adaugaMuchie(const int& x, const int& y, const DataType& costMuchie) {
+void WeightedGraph<DataType>::addEdge(const int& x, const int& y, const DataType& costMuchie) {
 	data[x].push_back(y);
 	data[y].push_back(x);
 	cost[x].push_back(costMuchie);

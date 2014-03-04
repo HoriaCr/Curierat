@@ -12,14 +12,14 @@ class Vehicle
 		list< Order< PositionType> > orders;
 
 		PositionType position;
-
+		double buyValue;
 		double mileage;
 		float averageSpeed;
 		int maximumVolume;
 		int maximumWeight;
 		int tankCapacity;
 		float fuel;
-		double buyValue;
+
 
 		int currentLoad;
 		int currentVolume;
@@ -42,7 +42,7 @@ class Vehicle
 
 		virtual double currentValue() { return 0.0;  }
 
-		virtual double consumCombustibil(const double& distanta) { return 0.0; }
+		virtual double fuelConsumed(const double& distanta) { return 0.0; }
 
 		void update();
 

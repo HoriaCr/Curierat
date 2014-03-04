@@ -15,7 +15,7 @@ class GraphOrientatCuCosturi : public GraphOrientat
 		GraphOrientatCuCosturi(const int& vertexNumber_ = 0, const int& edgeNumber_ = 0,
 						      const vector< pair< pair<int, int>, DataType> >& muchii = {});
 
-		void adaugaMuchie(const int& x, const int& y, const DataType& costMuchie);
+		void addEdge(const int& x, const int& y, const DataType& costMuchie);
 
 };
 
@@ -25,12 +25,12 @@ GraphOrientatCuCosturi<DataType>::GraphOrientatCuCosturi(const int& vertexNumber
 		vertexNumber = vertexNumber_;
 		edgeNumber = edgeNumber_;
 		for (const auto& muchie : muchii) {
-			adaugaMuchie(muchie.first.first, muchie.first.second, muchie.second);
+			addEdge(muchie.first.first, muchie.first.second, muchie.second);
 		}
 }
 
 template<class DataType>
-void GraphOrientatCuCosturi<DataType>::adaugaMuchie(const int& x, const int& y, const DataType& costMuchie) {
+void GraphOrientatCuCosturi<DataType>::addEdge(const int& x, const int& y, const DataType& costMuchie) {
 	data[x].push_back(y);
 	cost[x].push_back(costMuchie);
 }

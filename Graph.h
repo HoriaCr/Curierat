@@ -22,6 +22,8 @@ class Graph
 
 		Graph(int vertexNumber_);
 
+		int getVertexNumber() const;
+
 		virtual void addEdge(const int&x, const int& y);
 
 		friend istream& operator >> (istream& in, Graph& G);
@@ -35,6 +37,10 @@ class Graph
 Graph::Graph(int vertexNumber_ = 0) {
 	vertexNumber = vertexNumber_;
 	data.resize(vertexNumber);
+}
+
+int Graph::getVertexNumber() const {
+	return vertexNumber;
 }
 
 void Graph::dfs(const int& v, const int& parent, vector<bool>& visited, vector<int>& ret) {

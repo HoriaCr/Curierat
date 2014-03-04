@@ -4,7 +4,7 @@ template<class PositionType>
 class Airplane : public Vehicle<PositionType>
 {
 	int fuelType;
-
+		
 	public:
 
 		Airplane();

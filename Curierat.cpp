@@ -13,8 +13,6 @@ class DeliverySimulator
 	int orase;
 	DeliveryFirm<int> *deliveryFirm;
 	OrderGenerator<int> *generator;
-	Graph *graph;
-
 
 public:
 
@@ -26,7 +24,7 @@ public:
 		int seconds = days * 24 * 3600;
 		for (int s = 1; s <= seconds; s++) {
 			if (rand() % 15 == 0) {
-				Order<int> c = generator->nextOrder();
+				Order<int> c = generator->nextOrder(s);
 				deliveryFirm->receiveOrder(c);
 			}
 
@@ -39,49 +37,25 @@ public:
 };
 
 DeliverySimulator::DeliverySimulator() {
-
-	deliveryFirm = new DeliveryFirm<int>(0.0, 5.0, 3.0, 9.0, 50, 5, 300, 150, 250, 455, 500, 10);
-	orase = 10000;
+	int cities = 1000;
+	deliveryFirm = new DeliveryFirm<int>(new WeightedGraph<int>(cities,cities << 1, {}), 0.0, 5.0, 3.0, 9.0, 10, 2, 30, 20, 15, 77, 500, 10);
 	generator = new OrderGenerator<int>(orase);
-	graph = new WeightedGraph<int>(orase, orase * 2, {});
 }
 
 
 DeliverySimulator::~DeliverySimulator() {
 	delete deliveryFirm;
 	delete generator;
-	delete graph;
 }
-
 
 
 int main()
 {
 	DeliverySimulator S;
-	const string files[] = {
-		"Airplane",
-		"Automobile",
-		"DeliveryFirm",
-		"DirectedGraph",
-		"Graph",
-		"Order",
-		"OrderGenerator",
-		"Scooter",
-		"Truck",
-		"Van",
-		"Vehicle",
-		"WeightedDirectedGraph",
-		"WeightedGraph"
-	};
-
-	for (string file : files) {
-		ifstream ifs(file + ".h");
-		ofstream f2(file + ".cpp");
-		string content((std::istreambuf_iterator<char>(ifs)),
-			(std::istreambuf_iterator<char>()));
-
-		f2 << content;
-	}
+//	S.start(1);
+	a *x = new c();
+	a *y = new b();
+	cout << x->get() << " " << y->get() << " ";
 	return 0;
 }
 

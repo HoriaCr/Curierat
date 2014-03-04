@@ -30,7 +30,7 @@ class OrderGenerator<int>
 			srand(static_cast<unsigned int> (time(0)));
 		}
 
-		Order<int> nextOrder() {
+		Order<int> nextOrder(const int& sendingTime_) {
 			int source = rand() % vertexNumber;
 			int destination = rand() % vertexNumber;
 			if (vertexNumber > 1 && source == destination) {
@@ -46,6 +46,6 @@ class OrderGenerator<int>
 			bool fragile = static_cast<bool> (rand() & 1);
 			bool perishable = static_cast<bool> (rand() & 1);
 
-			return Order<int>(source, destination, volume, weight, value, deliveryTime, fragile, perishable);
+			return Order<int>(source, destination, volume, weight, value, deliveryTime, sendingTime_, fragile, perishable);
 		}
 };

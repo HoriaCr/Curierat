@@ -12,7 +12,8 @@ class Order
 		double weight;
 		double value;
 
-		int deliveryTimeOre; 
+		int deliveryTimelimit;
+		int sendingTime;
 		bool fragile;
 		bool perishable;
 
@@ -24,12 +25,15 @@ class Order
 			double volume_ = 0.0,
 			double weight_ = 0.0,
 			double value_ = 0.0,
-			int deliveryTimeOre_ = 0,
+			int deliveryTimelimit_ = 0,
+			int sendingTime_ = 0,
 			bool fragile_ = false,
 			bool perishable_ = false);
 
 
 		double costLivrare();
+
+		PositionType getSource() const;
 };
 
 template<class PositionType>
@@ -38,7 +42,8 @@ Order<PositionType>::Order(PositionType source_ = PositionType(),
 				 double volume_ = 0.0, 
 				 double weight_ = 0.0, 
 				 double value_ = 0.0, 
-				 int deliveryTimeOre_ = 0, 
+				 int deliveryTimelimit_ = 0,
+				 int sendingTime_ = 0,
 				 bool fragile_ = false, 
 				 bool perishable_ = false) {
 	
@@ -47,7 +52,14 @@ Order<PositionType>::Order(PositionType source_ = PositionType(),
 	volume = volume_;
     weight = weight_;
 	value = value_;
-	deliveryTimeOre = deliveryTimeOre_;
+	deliveryTimelimit = deliveryTimelimit_;
+	sendingTime = sendingTime_;
 	fragile = fragile_;
 	perishable = perishable_;
+}
+
+
+template<class PositionType>
+PositionType Order<PositionType>::getSource() const {
+	return source;
 }

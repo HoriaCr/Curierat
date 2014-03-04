@@ -1,15 +1,15 @@
 #include "Graph.h"
 
-class GraphOrientat : public Graph
+class DirectedGraph : public Graph
 {
 
-public:
+	public:
 
-	virtual	void addEdge(const int& x, const int& y);
+		virtual	void addEdge(const int& x, const int& y);
 
 };
 
 
-void GraphOrientat::addEdge(const int& x, const int& y) {
+void  DirectedGraph::addEdge(const int& x, const int& y) {
 	data[x].push_back(y);
 }

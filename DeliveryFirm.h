@@ -18,7 +18,7 @@ class DeliveryFirm
 	private:
 
 		vector< Vehicle<PositionType>*>  flotaVehiclee;
-		queue< Order<PositionType> > coada;
+		queue< Order<PositionType> > *coada;
 		Graph *graph;
 
 		double balance;
@@ -48,6 +48,7 @@ class DeliveryFirm
 	public:
 	
 	DeliveryFirm(
+		Graph *graph_,
 		double balance_,
 		double driverSlarary_,
 		double wokerSalary_,
@@ -70,7 +71,7 @@ class DeliveryFirm
 
 		double venituri();
 
-		void receiveOrder(const Order<PositionType>& Order);
+		void receiveOrder(const Order<PositionType>& order);
 
 		void atribuieComenzi();
 
@@ -79,7 +80,8 @@ class DeliveryFirm
 
 
 template<class PositionType>
-DeliveryFirm<PositionType>::DeliveryFirm(double balance_,
+DeliveryFirm<PositionType>::DeliveryFirm(Graph *graph_,
+	double balance_,
 	double driverSlarary_,
 	double wokerSalary_,
 	double managerSalary_,
@@ -92,6 +94,7 @@ DeliveryFirm<PositionType>::DeliveryFirm(double balance_,
 	int workers_,
 	int managers_
 	) {
+	graph = graph_;
 	balance = balance_;
 	driverSlarary = driverSlarary_;
 	wokerSalary = wokerSalary_;
@@ -108,6 +111,8 @@ DeliveryFirm<PositionType>::DeliveryFirm(double balance_,
 	vehicleNumber = airplaneNumber + truckNumber + vanNumber + automobileNumber + scooterNumber;
 	employeesNumber = drivers + workers + managers;
 	flotaVehiclee.resize(vehicleNumber);
+	coada = new queue< Order<PositionType> >[graph->getVertexNumber()];
+
 	for (int i = 0; i < airplaneNumber; i++) {
 		flotaVehiclee[i] = new Airplane<PositionType>();
 	}
@@ -133,13 +138,14 @@ DeliveryFirm<PositionType>::DeliveryFirm(double balance_,
 
 template<class PositionType>
 DeliveryFirm<PositionType>::~DeliveryFirm() {
-	//delete graph;
+	delete graph;
+	delete[] coada;
 }
 
 
 template<class PositionType>
-void DeliveryFirm<PositionType>::receiveOrder(const Order<PositionType>& Order) {
-	coada.push(Order);
+void DeliveryFirm<PositionType>::receiveOrder(const Order<PositionType>& order) {
+	coada[order.getSource()].push(order);
 }
 
 template<class PositionType>

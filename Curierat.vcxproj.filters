@@ -24,43 +24,43 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Firma.h">
+    <ClInclude Include="Airplane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vehicul.h">
+    <ClInclude Include="Automobile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Duba.h">
+    <ClInclude Include="DeliveryFirm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scuter.h">
+    <ClInclude Include="DirectedGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Masina.h">
+    <ClInclude Include="Graph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Avion.h">
+    <ClInclude Include="Order.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Comanda.h">
+    <ClInclude Include="OrderGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Graf.h">
+    <ClInclude Include="Scooter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GrafOrientat.h">
+    <ClInclude Include="Truck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GrafOrientatCuCosturi.h">
+    <ClInclude Include="Van.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GrafCuCosturi.h">
+    <ClInclude Include="Vehicle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GeneratorComenzi.h">
+    <ClInclude Include="WeightedDirectedGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Camion.h">
+    <ClInclude Include="WeightedGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

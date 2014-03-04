@@ -79,21 +79,21 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Avion.h" />
-    <ClInclude Include="Camion.h" />
-    <ClInclude Include="Comanda.h" />
-    <ClInclude Include="Duba.h" />
-    <ClInclude Include="Firma.h" />
-    <ClInclude Include="GeneratorComenzi.h" />
-    <ClInclude Include="Graf.h" />
-    <ClInclude Include="GrafCuCosturi.h" />
-    <ClInclude Include="GrafOrientat.h" />
-    <ClInclude Include="GrafOrientatCuCosturi.h" />
-    <ClInclude Include="Masina.h" />
-    <ClInclude Include="Scuter.h" />
+    <ClInclude Include="Airplane.h" />
+    <ClInclude Include="Automobile.h" />
+    <ClInclude Include="DeliveryFirm.h" />
+    <ClInclude Include="DirectedGraph.h" />
+    <ClInclude Include="Graph.h" />
+    <ClInclude Include="Order.h" />
+    <ClInclude Include="OrderGenerator.h" />
+    <ClInclude Include="Scooter.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Vehicul.h" />
+    <ClInclude Include="Truck.h" />
+    <ClInclude Include="Van.h" />
+    <ClInclude Include="Vehicle.h" />
+    <ClInclude Include="WeightedDirectedGraph.h" />
+    <ClInclude Include="WeightedGraph.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Curierat.cpp" />

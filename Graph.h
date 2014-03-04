@@ -5,13 +5,13 @@
 
 using namespace std;
 
-class Graf
+class Graph
 {
 
 	protected:
 	
-		int numarNoduri;
-		int numarMuchii;
+		int vertexNumber;
+		int edgeNumber;
 		vector< vector<int> > data;
 
 		void dfs(const int& v, const int& parent, vector<bool>& visited, vector<int>& ret);
@@ -20,11 +20,11 @@ class Graf
 	
 	public:
 
-		Graf(int numarNoduri_);
+		Graph(int vertexNumber_);
 
 		virtual void adaugaMuchie(const int&x, const int& y);
 
-		friend istream& operator >> (istream& in, Graf& G);
+		friend istream& operator >> (istream& in, Graph& G);
 	
 		vector<int> dfs(const int& root);
 
@@ -32,12 +32,12 @@ class Graf
 
 };
 
-Graf::Graf(int numarNoduri_ = 0) {
-	numarNoduri = numarNoduri_;
-	data.resize(numarNoduri);
+Graph::Graph(int vertexNumber_ = 0) {
+	vertexNumber = vertexNumber_;
+	data.resize(vertexNumber);
 }
 
-void Graf::dfs(const int& v, const int& parent, vector<bool>& visited, vector<int>& ret) {
+void Graph::dfs(const int& v, const int& parent, vector<bool>& visited, vector<int>& ret) {
 	visited[v] = true;
 	for (const int& w : data[v]) {
 		if (w != parent) {
@@ -48,16 +48,16 @@ void Graf::dfs(const int& v, const int& parent, vector<bool>& visited, vector<in
 	ret.push_back(v);
 }
 
-vector<int> Graf::dfs(const int& root) {
+vector<int> Graph::dfs(const int& root) {
 	vector<int> ret;
-	vector<bool> visited(numarNoduri, false);
+	vector<bool> visited(vertexNumber, false);
 	dfs(root, -1, visited, ret);
 	return ret;
 }
 
 
-vector<int> Graf::bfs(const int& root) {
-	vector<bool> visited(numarNoduri, false);
+vector<int> Graph::bfs(const int& root) {
+	vector<bool> visited(vertexNumber, false);
 	vector<int> ret;
 	queue<int> Q;
 	Q.push(root);
@@ -77,7 +77,7 @@ vector<int> Graf::bfs(const int& root) {
 	return ret;
 }
 
-void Graf::adaugaMuchie(const int& x, const int& y) {
+void Graph::adaugaMuchie(const int& x, const int& y) {
 	data[x].push_back(y);
 	data[y].push_back(x);
 }

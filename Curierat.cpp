@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Firma.h"
-#include "GrafCuCosturi.h"
-#include "GeneratorComenzi.h"
+#include "DeliveryFirm.h"
+#include "WeightedGraph.h"
+#include "OrderGenerator.h"
 
 using namespace std;
 
@@ -9,9 +9,9 @@ using namespace std;
 class SimulatorCurierat
 {
 	int orase;
-	Firma<int> *firma;
-	GeneratorComenzi<int> *generator;
-	Graf *graf;
+	DeliveryFirm<int> *deliveryFirm;
+	OrderGenerator<int> *generator;
+	Graph *graph;
 
 
 public:
@@ -24,12 +24,12 @@ public:
 		int secunde = zile * 24 * 3600;
 		for (int s = 1; s <= secunde; s++) {
 			if (rand() % 15 == 0) {
-				Comanda<int> c = generator->urmatoareaComanda();
-				firma->primesteComanda(c);
+				Order<int> c = generator->nextOrder();
+				deliveryFirm->receiveOrder(c);
 			}
 
 			if (s % 3600 == 0) {
-				firma->atribuieComenzi(*graf);
+				//DeliveryFirm->atribuieComenzi();
 			}
 		}
 	}
@@ -37,17 +37,18 @@ public:
 };
 
 SimulatorCurierat::SimulatorCurierat() {
-	firma = new Firma<int>(0.0, 5.0, 3.0, 9.0, 50, 5, 300, 150, 250, 455, 500, 10);
-	orase = 100000;
-	generator = new GeneratorComenzi<int>(orase);
-	graf = new GrafCuCosturi<int>(orase, orase * 2, {});
+
+	deliveryFirm = new DeliveryFirm<int>(0.0, 5.0, 3.0, 9.0, 50, 5, 300, 150, 250, 455, 500, 10);
+	orase = 10000;
+	generator = new OrderGenerator<int>(orase);
+	graph = new WeightedGraph<int>(orase, orase * 2, {});
 }
 
 
 SimulatorCurierat::~SimulatorCurierat() {
-	delete firma;
+	delete deliveryFirm;
 	delete generator;
-	delete graf;
+	delete graph;
 }
 
 
@@ -55,7 +56,7 @@ int main()
 {
 	SimulatorCurierat S;
 	S.start(30);
-
+	Order<int> c;
 
 	return 0;
 }

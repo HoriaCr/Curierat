@@ -1,22 +1,22 @@
-#include "Vehicul.h"
+#include "Vehicle.h"
 
 template<class PositionType>
-class Duba : public Vehicul<PositionType>
+class Van : public Vehicle<PositionType>
 {
 	
 	int tipCombustibil;
 public:
 
-	Duba();
+	Van();
 
-	double valoareCurenta();
+	double currentValue();
 
 	double consumCombustibil(const double& distanta);
 };
 
 
 template<class PositionType = pair<int, int> >
-Duba<PositionType>::Duba() : Vehicul(PositionType(),
+Van<PositionType>::Van() : Vehicle(PositionType(),
 	0,
 	60,
 	1,
@@ -30,12 +30,12 @@ Duba<PositionType>::Duba() : Vehicul(PositionType(),
 
 
 template<class PositionType>
-double Duba<PositionType>::valoareCurenta() {
-	return valoareInitiala - uzura / 100.0 * valoareInitiala;
+double Van<PositionType>::currentValue() {
+	return buyValue - wear / 100.0 * buyValue;
 }
 
 template<class PositionType>
-double Duba<PositionType>::consumCombustibil(const double& distanta) {
+double Van<PositionType>::consumCombustibil(const double& distanta) {
 	return distanta * tipCombustibil;
 }
 

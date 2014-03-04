@@ -1,24 +1,24 @@
-#include "Vehicul.h"
+#include "Vehicle.h"
 
 #pragma once
 
 template<class PositionType>
-class Scuter : public Vehicul<PositionType>
+class Scooter : public Vehicle<PositionType>
 {
 	int tipCombustibil;
 
 	public:
 
-		Scuter();
+		Scooter();
 
-		double valoareCurenta();
+		double currentValue();
 
 		double consumCombustibil(const double& distanta);
 };
 
 
 template<class PositionType = pair<int, int> >
-Scuter<PositionType>::Scuter() : Vehicul(PositionType(),
+Scooter<PositionType>::Scooter() : Vehicle(PositionType(),
 	0,
 	40,
 	1,
@@ -31,12 +31,12 @@ Scuter<PositionType>::Scuter() : Vehicul(PositionType(),
 
 
 template<class PositionType>
-double Scuter<PositionType>::valoareCurenta() {
-	return valoareInitiala - uzura / 100.0 * valoareInitiala;
+double Scooter<PositionType>::currentValue() {
+	return buyValue - wear / 100.0 * buyValue;
 }
 
 template<class PositionType>
-double Scuter<PositionType>::consumCombustibil(const double& distanta) {
+double Scooter<PositionType>::consumCombustibil(const double& distanta) {
 	return distanta * tipCombustibil;
 }
 

@@ -7,7 +7,6 @@ using namespace std;
 
 class Graph
 {
-
 	protected:
 	
 		int vertexNumber;
@@ -15,8 +14,6 @@ class Graph
 		vector< vector<int> > data;
 
 		void dfs(const int& v, const int& parent, vector<bool>& visited, vector<int>& ret);
-	
-
 	
 	public:
 
@@ -26,11 +23,12 @@ class Graph
 
 		virtual void addEdge(const int&x, const int& y);
 
-		friend istream& operator >> (istream& in, Graph& G);
-	
 		vector<int> dfs(const int& root);
 
 		vector<int> bfs(const int& root);
+
+
+		friend istream& operator >> (istream& in, Graph& G);
 
 };
 

@@ -17,8 +17,8 @@ class DeliveryFirm
 {
 	private:
 
-		vector< Vehicle<PositionType>*>  flotaVehiclee;
-		queue< Order<PositionType> > *coada;
+		vector< Vehicle<PositionType>*>  vehicleFleet;
+		queue< Order<PositionType> > *cityOrders;
 		Graph *graph;
 
 		double balance;
@@ -67,13 +67,13 @@ class DeliveryFirm
 
 		void update();
 
-		double costs();
+		double getCosts();
 
-		double venituri();
+		double getIncome();
 
 		void receiveOrder(const Order<PositionType>& order);
 
-		void atribuieComenzi();
+		void assignOrders();
 
 };
 
@@ -110,27 +110,27 @@ DeliveryFirm<PositionType>::DeliveryFirm(Graph *graph_,
 
 	vehicleNumber = airplaneNumber + truckNumber + vanNumber + automobileNumber + scooterNumber;
 	employeesNumber = drivers + workers + managers;
-	flotaVehiclee.resize(vehicleNumber);
-	coada = new queue< Order<PositionType> >[graph->getVertexNumber()];
+	vehicleFleet.resize(vehicleNumber);
+	cityOrders = new queue< Order<PositionType> >[graph->getVertexNumber()];
 
 	for (int i = 0; i < airplaneNumber; i++) {
-		flotaVehiclee[i] = new Airplane<PositionType>();
+		vehicleFleet[i] = new Airplane<PositionType>();
 	}
 
 	for (int i = 0; i < truckNumber; i++) {
-		flotaVehiclee[i + airplaneNumber] = new Truck<PositionType>();
+		vehicleFleet[i + airplaneNumber] = new Truck<PositionType>();
 	}
 
 	for (int i = 0; i < vanNumber; i++ ) {
-		flotaVehiclee[i + airplaneNumber + truckNumber] = new Van<PositionType>();
+		vehicleFleet[i + airplaneNumber + truckNumber] = new Van<PositionType>();
 	}
 
 	for (int i = 0; i < automobileNumber; i++) {
-		flotaVehiclee[i + airplaneNumber + truckNumber + vanNumber] = new Automobile<PositionType>();
+		vehicleFleet[i + airplaneNumber + truckNumber + vanNumber] = new Automobile<PositionType>();
 	}
 
 	for (int i = 0; i < scooterNumber; i++) {
-		flotaVehiclee[i + airplaneNumber + truckNumber + vanNumber + automobileNumber] = new Scooter<PositionType>();
+		vehicleFleet[i + airplaneNumber + truckNumber + vanNumber + automobileNumber] = new Scooter<PositionType>();
 	}
 	
 }
@@ -139,16 +139,16 @@ DeliveryFirm<PositionType>::DeliveryFirm(Graph *graph_,
 template<class PositionType>
 DeliveryFirm<PositionType>::~DeliveryFirm() {
 	delete graph;
-	delete[] coada;
+	delete[] cityOrders;
 }
 
 
 template<class PositionType>
 void DeliveryFirm<PositionType>::receiveOrder(const Order<PositionType>& order) {
-	coada[order.getSource()].push(order);
+	cityOrders[order.getSource()].push(order);
 }
 
 template<class PositionType>
-void DeliveryFirm<PositionType>::atribuieComenzi() {
+void DeliveryFirm<PositionType>::assignOrders() {
 
 }

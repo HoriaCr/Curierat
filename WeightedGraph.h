@@ -18,28 +18,28 @@ class WeightedGraph : public Graph
 	public:
 
 	WeightedGraph(const int& vertexNumber_ = 0, const int& edgeNumber_ = 0,
-		const vector< pair< pair<int, int>, DataType> >& muchii = {});
+		const vector< pair< pair<int, int>, DataType> >& edges = {});
 
 	
-	virtual void addEdge(const int& x, const int& y, const DataType& costMuchie);
+	virtual void addEdge(const int& x, const int& y, const DataType& edgeCost);
 
 	vector<DataType> djikstra(const int& source);
 
 };
 
 template<class DataType>
-WeightedGraph<DataType>::WeightedGraph(const int& vertexNumber_ = 0, const int& edgeNumber_ = 0, const vector< pair< pair<int, int>, DataType> >& muchii = {}) {
+WeightedGraph<DataType>::WeightedGraph(const int& vertexNumber_ = 0, const int& edgeNumber_ = 0, const vector< pair< pair<int, int>, DataType> >& edges = {}) {
 	vertexNumber = vertexNumber_;
 	edgeNumber = edgeNumber_;
 	data.resize(vertexNumber);
 	cost.resize(vertexNumber);
-	for (const auto& muchie : muchii) {
-		addEdge(muchie.first.first, muchie.first.second, muchie.second);
+	for (const auto& edge : edges) {
+		addEdge(edge.first.first, edge.first.second, edge.second);
 	}
 }
 
 template<>
-WeightedGraph<int>::WeightedGraph(const int& vertexNumber_, const int& edgeNumber_, const vector< pair< pair<int, int>, int> >& muchii) {
+WeightedGraph<int>::WeightedGraph(const int& vertexNumber_, const int& edgeNumber_, const vector< pair< pair<int, int>, int> >& edges) {
 	vertexNumber = vertexNumber_;
 	edgeNumber = edgeNumber_;
 	data.resize(vertexNumber);
@@ -60,11 +60,11 @@ WeightedGraph<int>::WeightedGraph(const int& vertexNumber_, const int& edgeNumbe
 
 
 template<class DataType>
-void WeightedGraph<DataType>::addEdge(const int& x, const int& y, const DataType& costMuchie) {
+void WeightedGraph<DataType>::addEdge(const int& x, const int& y, const DataType& edgeCost) {
 	data[x].push_back(y);
 	data[y].push_back(x);
-	cost[x].push_back(costMuchie);
-	cost[y].push_back(costMuchie);
+	cost[x].push_back(edgeCost);
+	cost[y].push_back(edgeCost);
 }
 
 template<class DataType>

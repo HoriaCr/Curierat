@@ -53,9 +53,7 @@ int main()
 {
 	DeliverySimulator S;
 //	S.start(1);
-	a *x = new c();
-	a *y = new b();
-	cout << x->get() << " " << y->get() << " ";
+
 	return 0;
 }
 

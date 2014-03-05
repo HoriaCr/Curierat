@@ -11,7 +11,7 @@ class Airplane : public Vehicle<PositionType>
 
 		double currentValue();
 
-		double fuelConsumed(const double& distanta);
+		double fuelConsumed(const double& distance);
 };
 
 
@@ -33,8 +33,8 @@ double Airplane<PositionType>::currentValue() {
 }
 
 template<class PositionType>
-double Airplane<PositionType>::fuelConsumed(const double& distanta) {
-	return distanta * fuelType;
+double Airplane<PositionType>::fuelConsumed(const double& distance) {
+	return distance * fuelType;
 }
 
 

@@ -9,25 +9,27 @@ template<class PositionType>
 class Vehicle
 {
 	protected:
+
 		list< Order< PositionType> > orders;
 
-		PositionType position;
+		PositionType destination;
 		double buyValue;
 		double mileage;
 		double distanceToDestination;
 		double kilometersPerLiter;
 		float averageSpeed;
-		int maximumVolume;
-		int maximumWeight;
+		float maximumVolume;
+		float maximumWeight;
 		int tankCapacity;
-		float fuel;
+		double fuel;
 
 
-		int currentLoad;
-		int currentVolume;
-		int wear;
+		float currentLoad;
+		float currentVolume;
+		float wear;
 
 		bool operational;
+		bool parked;
 
 
 	public:
@@ -35,66 +37,91 @@ class Vehicle
 		Vehicle(PositionType position_ = PositionType(),
 			double mileage_ = 0.0,
 			float averageSpeed_ = 0.0,
-			int maximumVolume_ = 0,
-			int maximumWeight_ = 0,
+			float maximumVolume_ = 0,
+			float maximumWeight_ = 0,
 			int tankCapacity_ = 0,
-			float fuel_ = 0.0,
+			double fuel_ = 0.0,
 			double buyValue_ = 0.0
 			);
 
 		virtual double currentValue() { return 0.0;  }
 
-		virtual double fuelConsumed(const double& distanta) { return 0.0; }
+		virtual double fuelConsumed(const double& distance) { return 0.0; }
 
-		void update(double seconds);
+		bool update(double seconds);
+
+		void updateDestination(const PositionType& nextDestination,double distance_);
 
 		pair< pair<int, int>, double> deliverOrders(int currentTime);
 
-		int getWear();
+		bool receiveOrder(const Order<PositionType>& order);
 
-		void receiveOrder(const Order<PositionType>& Order);
+		int getOrderCount();
+
+		bool isParked() const;
 
 };
+
 template<class PositionType>
-int Vehicle<PositionType>::getWear() {
-	return wear;
+bool Vehicle<PositionType>::receiveOrder(const Order<PositionType>& order) {
+	if (currentVolume + order.getVolume() < maximumVolume && currentLoad + order.getWeight() < maximumWeight) {
+		orders.push_back(order);
+		currentVolume += order.getVolume();
+		currentLoad += order.getWeight();
+		return true;
+	}
+
+	return false;
 }
 
 template<class PositionType>
-void Vehicle<PositionType>::receiveOrder(const Order<PositionType>& Order) {
-	orders.push_back(Order);
+bool Vehicle<PositionType>::isParked() const {
+	return parked;
 }
 
 template<class PositionType>
-void Vehicle<PositionType>::update(double seconds) {
+bool Vehicle<PositionType>::update(double seconds) {
+	if (distanceToDestination < 1e-4) return false;
 	double timeLeft = distanceToDestination / averageSpeed;
 	double dist;
+	bool reachedDestination = false;
 	if (timeLeft <= seconds) {
+		reachedDestination = true;
+		parked = true;
 		dist = distanceToDestination;
 	} else {
 		dist = averageSpeed * seconds;
 	}
 
-	fuel -= dist * kilometersPerLiter;
+	fuel = fuel - dist * kilometersPerLiter;
 	distanceToDestination -= dist;
 	mileage += dist;
+
+	return reachedDestination;
 }
 
 
 template<class PositionType>
 pair< pair<int,int> , double> Vehicle<PositionType>::deliverOrders(int currentTime) {
-	vector<auto> ordersToBeErased;
+	vector<list< Order<PositionType> >::iterator > ordersToBeErased;
 	pair< pair<int, int>, double> ret = { { 0, 0 }, 0.0 };
 	for (list< Order<PositionType> >::iterator it = orders.begin();it != orders.end(); ++it) {
 		Order<PositionType> &currentOrder = *it;
-		if (currentOrder.getDestination() == position) {
+		if (currentOrder.getDestination() == destination) {
+			ordersToBeErased.push_back(it);
+			currentLoad -= currentOrder.getWeight();
+			currentVolume -= currentOrder.getVolume();
 			if (currentTime <= currentOrder.getTimelimit()) {
 				ret.first.first++;
-				ret.second += currentOrder.getPrice();
+				ret.second += currentOrder.computePrice();
 			} else {
 				ret.first.second++;
 			}
 		}
+	}
+
+	for (auto& it : ordersToBeErased) {
+		orders.erase(it);
 	}
 
 	return ret;
@@ -105,13 +132,13 @@ template<class PositionType>
 Vehicle<PositionType>::Vehicle(PositionType position_,
 	double mileage_,
 	float averageSpeed_,
-	int maximumVolume_,
-	int maximumWeight_,
+	float maximumVolume_,
+	float maximumWeight_,
 	int tankCapacity_,
-	float fuel_,
+	double fuel_,
 	double buyValue_
 	) {
-	position = position_;
+	destination = position_;
 	mileage = mileage_;
 	averageSpeed = averageSpeed_;
 	maximumVolume = maximumVolume_;
@@ -124,8 +151,23 @@ Vehicle<PositionType>::Vehicle(PositionType position_,
 	distanceToDestination = 0.0;
 	kilometersPerLiter = 20.0;
 
-	currentLoad = 0;
-	currentVolume = 0;
+	currentLoad = 0.0;
+	currentVolume = 0.0;
 	wear = 0;
 	operational = true;
+	parked = true;
+}
+
+
+template<class PositionType>
+int Vehicle<PositionType>::getOrderCount() {
+	return static_cast<int>(orders.size());
+}
+
+
+template<class PositionType>
+void Vehicle<PositionType>::updateDestination(const PositionType& nextDestination,double distance_) {
+	destination = nextDestination;
+	distanceToDestination = distance_;
+	parked = false;
 }

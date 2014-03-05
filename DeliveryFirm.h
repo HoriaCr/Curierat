@@ -1,5 +1,6 @@
 #include <vector>
 #include <queue>
+#include <unordered_set>
 #include "Airplane.h"
 #include "Truck.h"
 #include "Van.h"
@@ -11,14 +12,13 @@
 
 using namespace std;
 
-
-template<class PositionType>
 class DeliveryFirm
 {
 	private:
 
-		vector< Vehicle<PositionType>*>  vehicleFleet;
-		queue< Order<PositionType> > *cityOrders;
+		vector< Vehicle<unsigned int>*>  vehicleFleet;
+		queue< Order<unsigned int> > *cityOrders;
+		unordered_set<unsigned int> unassignedCities;
 		Graph *graph;
 
 		double balance;
@@ -32,6 +32,8 @@ class DeliveryFirm
 		int vanNumber;
 		int automobileNumber;
 		int vehicleNumber;
+
+		int ordersInQueue;
 
 		int drivers;
 		int workers;
@@ -65,22 +67,18 @@ class DeliveryFirm
 
 		~DeliveryFirm();
 
-		void update();
+		void update(const int& currentTime, double seconds);
 
 		double getCosts();
 
 		double getIncome();
 
-		void receiveOrder(const Order<PositionType>& order);
-
-		void assignOrders();
+		void receiveOrder(const Order<unsigned int>& order);
 
 };
 
 
-
-template<class PositionType>
-DeliveryFirm<PositionType>::DeliveryFirm(Graph *graph_,
+DeliveryFirm::DeliveryFirm(Graph *graph_,
 	double balance_,
 	double driverSlarary_,
 	double wokerSalary_,
@@ -108,55 +106,65 @@ DeliveryFirm<PositionType>::DeliveryFirm(Graph *graph_,
 	workers = workers_;
 	managers = managers_;
 
+	ordersInQueue = 0;
+	succeededOrders = 0;
+	failedOrders = 0;
+
 	vehicleNumber = airplaneNumber + truckNumber + vanNumber + automobileNumber + scooterNumber;
 	employeesNumber = drivers + workers + managers;
 	vehicleFleet.resize(vehicleNumber);
-	cityOrders = new queue< Order<PositionType> >[graph->getVertexNumber()];
+	cityOrders = new queue< Order<unsigned int> >[graph->getVertexNumber()];
 
 	for (int i = 0; i < airplaneNumber; i++) {
-		vehicleFleet[i] = new Airplane<PositionType>();
+		vehicleFleet[i] = new Airplane<unsigned int>();
 	}
 
 	for (int i = 0; i < truckNumber; i++) {
-		vehicleFleet[i + airplaneNumber] = new Truck<PositionType>();
+		vehicleFleet[i + airplaneNumber] = new Truck<unsigned int>();
 	}
 
 	for (int i = 0; i < vanNumber; i++ ) {
-		vehicleFleet[i + airplaneNumber + truckNumber] = new Van<PositionType>();
+		vehicleFleet[i + airplaneNumber + truckNumber] = new Van<unsigned int>();
 	}
 
 	for (int i = 0; i < automobileNumber; i++) {
-		vehicleFleet[i + airplaneNumber + truckNumber + vanNumber] = new Automobile<PositionType>();
+		vehicleFleet[i + airplaneNumber + truckNumber + vanNumber] = new Automobile<unsigned int>();
 	}
 
 	for (int i = 0; i < scooterNumber; i++) {
-		vehicleFleet[i + airplaneNumber + truckNumber + vanNumber + automobileNumber] = new Scooter<PositionType>();
+		vehicleFleet[i + airplaneNumber + truckNumber + vanNumber + automobileNumber] = new Scooter<unsigned int>();
 	}
 	
 }
 
-
-template<class PositionType>
-DeliveryFirm<PositionType>::~DeliveryFirm() {
+DeliveryFirm::~DeliveryFirm() {
 	delete graph;
 	delete[] cityOrders;
 }
 
 
-template<class PositionType>
-void DeliveryFirm<PositionType>::receiveOrder(const Order<PositionType>& order) {
+void DeliveryFirm::receiveOrder(const Order<unsigned int>& order) {
 	cityOrders[order.getSource()].push(order);
-}
-
-template<class PositionType>
-void DeliveryFirm<PositionType>::assignOrders() {
+	unassignedCities.insert(order.getSource());
 
 }
 
-
-template<class PositionType>
-void DeliveryFirm<PositionType>::update() {
+void DeliveryFirm::update(const int& currentTime,double seconds) {
 	for (int i = 0; i < vehicleNumber; i++) {
+		if (vehicleFleet[i]->isParked()) {
+			if (unassignedCities.empty() == false) {
+				 unsigned int city = *unassignedCities.begin();
+				 unassignedCities.erase(unassignedCities.begin());
+				 vehicleFleet[i]->updateDestination(city, 0.0); //TO DO:
+			}
+		} 
 
+		if (vehicleFleet[i]->update(8.0)) {
+			pair < pair<int,int>,double> ret = vehicleFleet[i]->deliverOrders(currentTime);
+			succeededOrders += ret.first.first;
+			failedOrders += ret.first.second;
+			balance += ret.second;
+		}
+		
 	}
 }

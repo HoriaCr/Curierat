@@ -12,7 +12,7 @@ class Truck : public Vehicle<PositionType>
 
 		double currentValue();
 
-		double fuelConsumed(const double& distanta);
+		double fuelConsumed(const double& distance);
 
 		void update(PositionType& nextLocatie);
 };
@@ -37,8 +37,8 @@ double Truck<PositionType>::currentValue() {
 }
 
 template<class PositionType>
-double Truck<PositionType>::fuelConsumed(const double& distanta) {
-	return distanta * fuelType;
+double Truck<PositionType>::fuelConsumed(const double& distance) {
+	return distance * fuelType;
 }
 
 

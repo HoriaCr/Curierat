@@ -20,7 +20,7 @@ class Scooter : public Vehicle<PositionType>
 template<class PositionType = pair<int, int> >
 Scooter<PositionType>::Scooter() : Vehicle(PositionType(),
 	0,
-	40,
+	15,
 	1,
 	30,
 	10,

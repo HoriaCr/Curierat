@@ -18,7 +18,7 @@ public:
 template<class PositionType = pair<int, int> >
 Van<PositionType>::Van() : Vehicle(PositionType(),
 	0,
-	60,
+	17,
 	1,
 	2000,
 	150,

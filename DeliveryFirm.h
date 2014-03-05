@@ -152,3 +152,11 @@ template<class PositionType>
 void DeliveryFirm<PositionType>::assignOrders() {
 
 }
+
+
+template<class PositionType>
+void DeliveryFirm<PositionType>::update() {
+	for (int i = 0; i < vehicleNumber; i++) {
+
+	}
+}

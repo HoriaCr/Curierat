@@ -19,7 +19,6 @@ class Order
 
 	public:
 
-
 		Order(PositionType source_ = PositionType(),
 			PositionType destination_ = PositionType(),
 			double volume_ = 0.0,
@@ -31,9 +30,15 @@ class Order
 			bool perishable_ = false);
 
 
-		double costLivrare();
+		double deliveryCost();
 
 		PositionType getSource() const;
+
+		PositionType getDestination() const;
+
+		double computePrice() const;
+
+		int getTimelimit() const;
 };
 
 template<class PositionType>
@@ -62,4 +67,19 @@ Order<PositionType>::Order(PositionType source_ = PositionType(),
 template<class PositionType>
 PositionType Order<PositionType>::getSource() const {
 	return source;
+}
+
+template<class PositionType>
+PositionType Order<PositionType>::getDestination() const {
+	return destination;
+}
+
+template<class PositionType>
+double Order<PositionType>::computePrice() const {
+	return value / 25.0 + 100.0 / deliveryTimelimit + 2.0 * perishable + 2.0 * fragile + volume / 1000.0 + weight / 100.0;
+}
+
+template<class PositionType>
+int Order<PositionType>::getTimelimit() const {
+	return sendingTime + deliveryTimelimit;
 }

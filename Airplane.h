@@ -18,7 +18,7 @@ class Airplane : public Vehicle<PositionType>
 template<class PositionType>
 Airplane<PositionType>::Airplane() : Vehicle(PositionType(),
 	0,
-	60,
+	100,
 	30,
 	1000,
 	500,

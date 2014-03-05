@@ -21,7 +21,7 @@ class Truck : public Vehicle<PositionType>
 template<class PositionType = pair<int,int> >
 Truck<PositionType>::Truck() : Vehicle(PositionType(),
 			0,
-			50,
+			12,
 			100,
 			24000,
 		   	500,

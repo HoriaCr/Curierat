@@ -23,7 +23,7 @@ class WeightedGraph : public Graph
 	
 	virtual void addEdge(const int& x, const int& y, const DataType& edgeCost);
 
-	vector<DataType> djikstra(const int& source);
+	vector<DataType> djikstra(const unsigned int& source);
 
 };
 
@@ -68,7 +68,7 @@ void WeightedGraph<DataType>::addEdge(const int& x, const int& y, const DataType
 }
 
 template<class DataType>
-vector<DataType> WeightedGraph<DataType>::djikstra(const int& source) {
+vector<DataType> WeightedGraph<DataType>::djikstra(const unsigned int& source) {
 
 	auto comp = [](pair< DataType, int >& a, pair< DataType, int >& b) {
 		return a.first < b.first;

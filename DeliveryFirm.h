@@ -1,5 +1,7 @@
 #include <vector>
 #include <queue>
+#include <string>
+#include <sstream>
 #include <unordered_set>
 #include "Airplane.h"
 #include "Truck.h"
@@ -19,7 +21,7 @@ class DeliveryFirm
 		vector< Vehicle<unsigned int>*>  vehicleFleet;
 		queue< Order<unsigned int> > *cityOrders;
 		unordered_set<unsigned int> unassignedCities;
-		Graph *graph;
+		WeightedGraph<int> *graph;
 
 		double balance;
 		double driverSlarary;
@@ -50,7 +52,7 @@ class DeliveryFirm
 	public:
 	
 	DeliveryFirm(
-		Graph *graph_,
+		WeightedGraph<int>*graph_,
 		double balance_,
 		double driverSlarary_,
 		double wokerSalary_,
@@ -75,10 +77,11 @@ class DeliveryFirm
 
 		void receiveOrder(const Order<unsigned int>& order);
 
+		string getLog();
 };
 
 
-DeliveryFirm::DeliveryFirm(Graph *graph_,
+DeliveryFirm::DeliveryFirm(WeightedGraph<int> *graph_,
 	double balance_,
 	double driverSlarary_,
 	double wokerSalary_,
@@ -92,7 +95,7 @@ DeliveryFirm::DeliveryFirm(Graph *graph_,
 	int workers_,
 	int managers_
 	) {
-	graph = graph_;
+	graph  = graph_;
 	balance = balance_;
 	driverSlarary = driverSlarary_;
 	wokerSalary = wokerSalary_;
@@ -146,16 +149,33 @@ DeliveryFirm::~DeliveryFirm() {
 void DeliveryFirm::receiveOrder(const Order<unsigned int>& order) {
 	cityOrders[order.getSource()].push(order);
 	unassignedCities.insert(order.getSource());
-
 }
 
 void DeliveryFirm::update(const int& currentTime,double seconds) {
+	//vector<int> distances = graph->djikstra(currentDestination);
+	vector<int> distances(graph->getVertexNumber(), 5);
 	for (int i = 0; i < vehicleNumber; i++) {
 		if (vehicleFleet[i]->isParked()) {
+			unsigned int currentDestination = vehicleFleet[i]->getDestination();
+			if (vehicleFleet[i]->getOrderCount() > 0) {
+				unsigned int nextDestination = vehicleFleet[i]->getNextDestination();
+				vehicleFleet[i]->updateDestination(nextDestination, 1.0 * distances[nextDestination]);
+
+			} else
 			if (unassignedCities.empty() == false) {
-				 unsigned int city = *unassignedCities.begin();
+				 unsigned int nextDestination = *unassignedCities.begin();
 				 unassignedCities.erase(unassignedCities.begin());
-				 vehicleFleet[i]->updateDestination(city, 0.0); //TO DO:
+				 vehicleFleet[i]->updateDestination(nextDestination, 1.0 * distances[nextDestination]);
+			} else
+			if (cityOrders[currentDestination].empty() == false) {
+				while (cityOrders[currentDestination].empty() == false) {
+					Order<unsigned int> order = cityOrders[currentDestination].front();
+					if (vehicleFleet[i]->receiveOrder(order) == false) {
+						break;
+					} else {
+						cityOrders[currentDestination].pop();
+					}
+				}
 			}
 		} 
 
@@ -167,4 +187,12 @@ void DeliveryFirm::update(const int& currentTime,double seconds) {
 		}
 		
 	}
+}
+
+string DeliveryFirm::getLog() {
+	ostringstream out;
+	out << "Balance : " << fixed << balance << "\n";
+	out << "Succeded Orders : " << succeededOrders << "\n";
+	out << "Failed Orders : " << failedOrders << "\n";
+	return out.str();
 }

@@ -36,5 +36,3 @@ template<class PositionType>
 double Airplane<PositionType>::fuelConsumed(const double& distance) {
 	return distance * fuelType;
 }
-
-

@@ -60,6 +60,10 @@ class Vehicle
 
 		bool isParked() const;
 
+		PositionType getNextDestination();
+
+		PositionType getDestination();
+
 };
 
 template<class PositionType>
@@ -170,4 +174,19 @@ void Vehicle<PositionType>::updateDestination(const PositionType& nextDestinatio
 	destination = nextDestination;
 	distanceToDestination = distance_;
 	parked = false;
+}
+
+
+template<class PositionType>
+PositionType Vehicle<PositionType>::getNextDestination() {
+	if (orders.empty()) {
+		return destination;
+	}
+
+	return (*orders.begin()).getDestination();
+}
+
+template<class PositionType>
+PositionType Vehicle<PositionType>::getDestination() {
+	return destination;
 }

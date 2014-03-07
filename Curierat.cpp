@@ -22,6 +22,7 @@ public:
 
 	void start(const int& days) {
 		int seconds = days * 24 * 3600;
+		deliveryFirm->computeDistances();
 		for (int s = 1; s <= seconds; s++) {
 			if ( (rand() & 15) == 0) {
 				Order<unsigned int> c = generator->nextOrder(s);
@@ -39,7 +40,7 @@ public:
 };
 
 DeliverySimulator::DeliverySimulator() {
-	cities = 1000;
+	cities = 512;
 	deliveryFirm = new DeliveryFirm(new WeightedGraph<int>(cities,cities << 1, {}), 0.0, 5.0, 3.0, 9.0, 10, 2, 30, 20, 15, 77, 500, 10);
 	generator = new OrderGenerator<unsigned int>(cities);
 }

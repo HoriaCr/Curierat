@@ -47,7 +47,7 @@ WeightedGraph<int>::WeightedGraph(const int& vertexNumber_, const int& edgeNumbe
 	for (int i = 0; i < edgeNumber; i++) {
 		int v = rand() % vertexNumber;
 		int w = rand() % vertexNumber;
-		int c = rand() % 666013 + 1;
+		int c = rand() % 113 + 1;
 		if (vertexNumber > 1 && v == w) {
 			while (v == w) {
 				w = rand() % vertexNumber;
@@ -70,8 +70,8 @@ void WeightedGraph<DataType>::addEdge(const int& x, const int& y, const DataType
 template<class DataType>
 vector<DataType> WeightedGraph<DataType>::djikstra(const unsigned int& source) {
 
-	auto comp = [](pair< DataType, int >& a, pair< DataType, int >& b) {
-		return a.first < b.first;
+	auto comp = [](const pair< DataType, int >& a,const pair< DataType, int >& b) {
+		return a.first > b.first;
 	};
 
 	priority_queue < pair< DataType,int>, vector< pair<DataType,int> > ,decltype(comp) > myHeap(comp);

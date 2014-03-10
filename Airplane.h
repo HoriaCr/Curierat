@@ -16,7 +16,7 @@ class Airplane : public Vehicle<PositionType>
 
 
 template<class PositionType>
-Airplane<PositionType>::Airplane() : Vehicle(PositionType(),
+Airplane<PositionType>::Airplane() : Vehicle<PositionType>(PositionType(),
 	0,
 	100,
 	30,
@@ -29,7 +29,8 @@ Airplane<PositionType>::Airplane() : Vehicle(PositionType(),
 
 template<class PositionType>
 double Airplane<PositionType>::currentValue() {
-	return buyValue - wear / 100.0 * buyValue;
+	return 0.0;
+	//return buyValue - wear / 100.0 * buyValue;
 }
 
 template<class PositionType>

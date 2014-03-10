@@ -15,8 +15,8 @@ public:
 };
 
 
-template<class PositionType = pair<int, int> >
-Van<PositionType>::Van() : Vehicle(PositionType(),
+template<class PositionType>
+Van<PositionType>::Van() : Vehicle<PositionType>(PositionType(),
 	0,
 	17,
 	1,
@@ -31,7 +31,8 @@ Van<PositionType>::Van() : Vehicle(PositionType(),
 
 template<class PositionType>
 double Van<PositionType>::currentValue() {
-	return buyValue - wear / 100.0 * buyValue;
+	return 0.0;
+    //return buyValue - wear / 100.0 * buyValue;
 }
 
 template<class PositionType>

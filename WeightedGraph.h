@@ -4,6 +4,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <cassert>
+#include <limits>
 
 #pragma once
 
@@ -17,8 +18,9 @@ class WeightedGraph : public Graph
 
 	public:
 
-	WeightedGraph(const int& vertexNumber_ = 0, const int& edgeNumber_ = 0,
-		const vector< pair< pair<int, int>, DataType> >& edges = {});
+	WeightedGraph(const int& vertexNumber_,
+                  const int& edgeNumber_,
+		          const vector< pair< pair<int, int>, DataType> >& edges);
 
 	
 	virtual void addEdge(const int& x, const int& y, const DataType& edgeCost);

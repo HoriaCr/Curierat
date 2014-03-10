@@ -1,4 +1,5 @@
 #include "Order.h"
+#include <vector>
 #include <list>
 
 using namespace std;
@@ -34,19 +35,19 @@ class Vehicle
 
 	public:
 
-		Vehicle(PositionType position_ = PositionType(),
-			double mileage_ = 0.0,
-			float averageSpeed_ = 0.0,
-			float maximumVolume_ = 0,
-			float maximumWeight_ = 0,
-			int tankCapacity_ = 0,
-			double fuel_ = 0.0,
-			double buyValue_ = 0.0
+		Vehicle(PositionType position_,
+			double mileage_,
+			float averageSpeed_,
+			float maximumVolume_,
+			float maximumWeight_,
+			int tankCapacity_,
+			double fuel_,
+			double buyValue_
 			);
 
 		virtual double currentValue() { return 0.0;  }
 
-		virtual double fuelConsumed(const double& distance) { return 0.0; }
+		virtual double fuelConsumed(const double& distance) { return distance / kilometersPerLiter; }
 
 		bool update(double seconds);
 
@@ -107,9 +108,9 @@ bool Vehicle<PositionType>::update(double seconds) {
 
 template<class PositionType>
 pair< pair<int,int> , double> Vehicle<PositionType>::deliverOrders(int currentTime) {
-	vector<list< Order<PositionType> >::iterator > ordersToBeErased;
+	vector<typename list< Order<PositionType> >::iterator > ordersToBeErased;
 	pair< pair<int, int>, double> ret = { { 0, 0 }, 0.0 };
-	for (list< Order<PositionType> >::iterator it = orders.begin();it != orders.end(); ++it) {
+	for (typename list< Order<PositionType> >::iterator it = orders.begin();it != orders.end(); ++it) {
 		Order<PositionType> &currentOrder = *it;
 		if (currentOrder.getDestination() == destination) {
 			ordersToBeErased.push_back(it);
@@ -133,15 +134,15 @@ pair< pair<int,int> , double> Vehicle<PositionType>::deliverOrders(int currentTi
 
 
 template<class PositionType>
-Vehicle<PositionType>::Vehicle(PositionType position_,
-	double mileage_,
-	float averageSpeed_,
-	float maximumVolume_,
-	float maximumWeight_,
-	int tankCapacity_,
-	double fuel_,
-	double buyValue_
-	) {
+Vehicle<PositionType>::	Vehicle(PositionType position_ = PositionType(),
+    double mileage_ = 0.0,
+    float averageSpeed_ = 0.0,
+    float maximumVolume_ = 0,
+    float maximumWeight_ = 0,
+    int tankCapacity_ = 0,
+    double fuel_ = 0.0,
+    double buyValue_ = 0.0) {
+    
 	destination = position_;
 	mileage = mileage_;
 	averageSpeed = averageSpeed_;

@@ -13,13 +13,11 @@ class Truck : public Vehicle<PositionType>
 		double currentValue();
 
 		double fuelConsumed(const double& distance);
-
-		void update(PositionType& nextLocatie);
 };
 
 
-template<class PositionType = pair<int,int> >
-Truck<PositionType>::Truck() : Vehicle(PositionType(),
+template<class PositionType>
+Truck<PositionType>::Truck() : Vehicle<PositionType>(PositionType(),
 			0,
 			12,
 			100,
@@ -33,7 +31,8 @@ Truck<PositionType>::Truck() : Vehicle(PositionType(),
 
 template<class PositionType>
 double Truck<PositionType>::currentValue() {
-	return buyValue - wear / 100.0 * buyValue;
+    return 0.5;
+//	return buyValue - wear / 100.0 * buyValue;
 }
 
 template<class PositionType>

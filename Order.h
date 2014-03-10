@@ -7,10 +7,11 @@ class Order
 
 		PositionType source;
 		PositionType destination;
-
+        
+        double value;
 		float volume;
 		float weight;
-		double value;
+		
 
 		int deliveryTimelimit;
 		int sendingTime;
@@ -19,15 +20,16 @@ class Order
 
 	public:
 
-		Order(PositionType source_ = PositionType(),
-			PositionType destination_ = PositionType(),
-			float volume_ = 0.0,
-			float weight_ = 0.0,
-			double value_ = 0.0,
-			int deliveryTimelimit_ = 0,
-			int sendingTime_ = 0,
-			bool fragile_ = false,
-			bool perishable_ = false);
+		Order(
+            PositionType source_,
+			PositionType destination_,
+			float volume_,
+			float weight_,
+			double value_,
+			int deliveryTimelimit_,
+			int sendingTime_,
+			bool fragile_,
+			bool perishable_);
 
 
 		PositionType getSource() const;
@@ -95,3 +97,4 @@ template<class PositionType>
 float Order<PositionType>::getVolume() const {
 	return volume;
 }
+

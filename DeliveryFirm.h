@@ -189,7 +189,7 @@ void DeliveryFirm::update(const int& currentTime,double seconds) {
 			}
 		} 
 
-		if (vehicleFleet[i]->update(8.0)) {
+		if (vehicleFleet[i]->update(seconds)) {
 			pair < pair<int,int>,double> ret = vehicleFleet[i]->deliverOrders(currentTime);
 			succeededOrders += ret.first.first;
 			failedOrders += ret.first.second;

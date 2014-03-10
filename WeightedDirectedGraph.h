@@ -7,8 +7,8 @@ class WeightedDirectedGraph : public WeightedGraph
 {
 	public:
 
-		WeightedDirectedGraph(const int& vertexNumber_ = 0, const int& edgeNumber_ = 0,
-						      const vector< pair< pair<int, int>, DataType> >& muchii = {});
+		WeightedDirectedGraph(const int& vertexNumber_, const int& edgeNumber_,
+						      const vector< pair< pair<int, int>, DataType> >& muchii);
 
 		void addEdge(const int& x, const int& y, const DataType& costMuchie);
 

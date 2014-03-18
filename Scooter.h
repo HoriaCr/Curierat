@@ -30,7 +30,7 @@ Scooter<PositionType>::Scooter() : Vehicle<PositionType>(PositionType(),
 }
 
 
-template<class PositionType>
+template<class PositionType>		
 double Scooter<PositionType>::currentValue() {
 	return 0.0;
     //return buyValue - wear / 100.0 * buyValue;

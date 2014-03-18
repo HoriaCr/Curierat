@@ -45,12 +45,10 @@ DeliverySimulator::DeliverySimulator() {
 	generator = new OrderGenerator<unsigned int>(cities);
 }
 
-
 DeliverySimulator::~DeliverySimulator() {
 	delete deliveryFirm;
 	delete generator;
 }
-
 
 int main()
 {

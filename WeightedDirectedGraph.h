@@ -3,7 +3,7 @@
 
 
 template<class DataType>
-class WeightedDirectedGraph : public WeightedGraph
+class WeightedDirectedGraph : public WeightedGraph<DataType>
 {
 	public:
 

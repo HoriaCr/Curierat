@@ -14,7 +14,10 @@ class WeightedGraph : public Graph
 	protected:
 
 	vector< vector<DataType> > cost;
+	
+	void readData(istream& in);
 
+	void writeData(ostream& out);
 
 	public:
 
@@ -22,11 +25,11 @@ class WeightedGraph : public Graph
                   const int& edgeNumber_,
 		          const vector< pair< pair<int, int>, DataType> >& edges);
 
-	
 	virtual void addEdge(const int& x, const int& y, const DataType& edgeCost);
 
 	vector<DataType> djikstra(const unsigned int& source);
-
+	
+	WeightedGraph<DataType> MinimumSpanningTree();
 };
 
 template<class DataType>
@@ -59,14 +62,23 @@ WeightedGraph<int>::WeightedGraph(const int& vertexNumber_, const int& edgeNumbe
 	}
 }
 
-
-
 template<class DataType>
 void WeightedGraph<DataType>::addEdge(const int& x, const int& y, const DataType& edgeCost) {
-	data[x].push_back(y);
-	data[y].push_back(x);
-	cost[x].push_back(edgeCost);
-	cost[y].push_back(edgeCost);
+	
+	try {
+		if (x < 0 || x >= vertexNumber || y < 0 || y >= vertexNumber) {
+			out_of_range outException("Node index out of bounds!");
+			throw outException;
+		}
+		data[x].push_back(y);
+		data[y].push_back(x);
+		cost[x].push_back(edgeCost);
+		cost[y].push_back(edgeCost);
+	}
+	
+	catch (out_of_range& exception) {
+		cout << exception.what() << "\n";
+	}
 }
 
 template<class DataType>
@@ -89,7 +101,7 @@ vector<DataType> WeightedGraph<DataType>::djikstra(const unsigned int& source) {
 		if (distance[v] != priority) continue;
 		for (int i = 0; i < (int)data[v].size(); i++) {
 			int w = data[v][i];
-			int c = cost[v][i];
+			DataType c = cost[v][i];
 			if (distance[w] > distance[v] + c) {
 				distance[w] = distance[v] + c;
 				myHeap.push({ distance[w], w });
@@ -98,4 +110,69 @@ vector<DataType> WeightedGraph<DataType>::djikstra(const unsigned int& source) {
 	}
 
 	return distance;
+}
+
+template<class DataType> 
+WeightedGraph<DataType> WeightedGraph<DataType>::MinimumSpanningTree() {
+	WeightedGraph<DataType> ret(vertexNumber, 0, {});
+
+	auto comp = [](const pair< DataType, int >& a, const pair< DataType, int >& b) {
+		return a.first > b.first;
+	};
+	
+	vector<bool> used(vertexNumber,false);
+	vector<int> who(vertexNumber);
+	vector<DataType> best(vertexNumber, numeric_limits<DataType>::max());
+	priority_queue < pair< DataType, int>, vector< pair<DataType, int> >, decltype(comp) > myHeap(comp);
+	int treeEdges = 0;
+	best[0] = DataType();
+	myHeap.push({ DataType(), 0 });
+	while (treeEdges != vertexNumber - 1){
+		int v;
+		DataType edgeCost;
+	
+		do {
+			tie(edgeCost, v) = myHeap.top();
+			myHeap.pop();
+		} while (!myHeap.empty() && !used[v]);
+		if (v != who[v]) {
+			treeEdges++;
+			ret.addEdge(v, who[v], edgeCost);
+		}
+		used[v] = true;
+		for (int i = 0; i < (int)data[v].size(); i++) {
+			int w = data[v][i];
+			edgeCost = cost[v][i];
+			if (best[w] > edgeCost) {
+				best[w] = edgeCost;
+				who[w] = v;
+				myHeap.push({ best[w], w });
+			}
+		}
+		
+	}
+	return ret;
+}
+
+template<class DataType>
+void WeightedGraph<DataType>::readData(istream& in) {	
+	in >> vertexNumber >> edgeNumber;
+	int a, b;
+	DataType c;
+	for (int i = 0; i < edgeNumber; i++) {
+		cin >> a >> b >> c;
+		addEdge(a, b, c);
+	}
+}
+
+template<class DataType>
+void WeightedGraph<DataType>::writeData(ostream& out) {
+	out << vertexNumber << " " << edgeNumber << "\n";
+	for (int v = 0; v < vertexNumber; v++) {
+		for (int i = 0; i < (int)data[v].size(); i++) {
+			if (v < data[v][i]) {
+				out << v << " " << data[v][i] << cost[v][i] << "\n";
+			}
+		}
+	}
 }

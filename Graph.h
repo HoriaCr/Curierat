@@ -24,6 +24,8 @@ class Graph
 	public:
 
 		Graph(int vertexNumber_);
+        
+        virtual ~Graph();
 
 		int getVertexNumber() const;
 
@@ -42,6 +44,10 @@ class Graph
 Graph::Graph(int vertexNumber_ = 0) {
 	vertexNumber = vertexNumber_;
 	data.resize(vertexNumber);
+}
+
+Graph::~Graph() {
+    vertexNumber = 0;
 }
 
 int Graph::getVertexNumber() const {

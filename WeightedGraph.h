@@ -24,8 +24,10 @@ class WeightedGraph : public Graph
 	WeightedGraph(const int& vertexNumber_,
                   const int& edgeNumber_,
 		          const vector< pair< pair<int, int>, DataType> >& edges);
-
-	virtual void addEdge(const int& x, const int& y, const DataType& edgeCost);
+    
+    ~WeightedGraph();
+	
+    virtual void addEdge(const int& x, const int& y, const DataType& edgeCost);
 
 	vector<DataType> djikstra(const unsigned int& source);
 	
@@ -43,12 +45,23 @@ WeightedGraph<DataType>::WeightedGraph(const int& vertexNumber_ = 0, const int& 
 	}
 }
 
+template<class DataType>
+WeightedGraph<DataType>::~WeightedGraph() {
+    vertexNumber = 0;
+    edgeNumber = 0;
+}
+
 template<>
 WeightedGraph<int>::WeightedGraph(const int& vertexNumber_, const int& edgeNumber_, const vector< pair< pair<int, int>, int> >& edges) {
 	vertexNumber = vertexNumber_;
 	edgeNumber = edgeNumber_;
 	data.resize(vertexNumber);
 	cost.resize(vertexNumber);
+
+    for (const auto& edge : edges) {
+		addEdge(edge.first.first, edge.first.second, edge.second);
+	}
+
 	for (int i = 0; i < edgeNumber; i++) {
 		int v = rand() % vertexNumber;
 		int w = rand() % vertexNumber;

@@ -110,6 +110,8 @@ void Graph::addEdge(const int& x, const int& y) {
 
 void Graph::readData(istream& in) {	
 	in >> vertexNumber >> edgeNumber;
+	data.clear();
+	data.resize(vertexNumber);
 	int a, b;
 	for (int i = 0; i < edgeNumber; i++) {
 		cin >> a >> b;

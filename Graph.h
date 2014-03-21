@@ -16,15 +16,17 @@ class Graph
 		vector< vector<int> > data;
 
 		void dfs(const int& v, const int& parent, vector<bool>& visited, vector<int>& ret);
-
+    
 		virtual void readData(istream& in);
 
-		virtual void writeData(ostream& out);
+		virtual void writeData(ostream& out);    
 
-	public:
+    public:
 
 		Graph(int vertexNumber_);
-        
+       
+        Graph(int vertexNumber_,int edgeNumber,const vector< pair<int,int> >& edges);
+
         virtual ~Graph();
 
 		int getVertexNumber() const;
@@ -35,6 +37,8 @@ class Graph
 
 		vector<int> bfs(const int& root);
 
+        bool isConnected();
+
 		friend istream& operator >> (istream& in, Graph& graph);
 
 		friend ostream& operator << (ostream& out, Graph& graph);
@@ -44,6 +48,15 @@ class Graph
 Graph::Graph(int vertexNumber_ = 0) {
 	vertexNumber = vertexNumber_;
 	data.resize(vertexNumber);
+}
+
+Graph::Graph(int vertexNumber_,int edgeNumber_,const vector< pair<int,int> >& edges) {
+	vertexNumber = vertexNumber_;
+    edgeNumber = edgeNumber_;
+	data.resize(vertexNumber);
+    for (const auto& edge : edges) {
+        addEdge(edge.first, edge.second);
+    }
 }
 
 Graph::~Graph() {
@@ -128,6 +141,11 @@ void Graph::writeData(ostream& out) {
 			}
 		}
 	}
+}
+
+bool Graph::isConnected() {
+    vector<int> nodes = bfs(0);
+    return (int)nodes.size() == vertexNumber;
 }
 
 istream& operator >> (istream& in, Graph& graph) {

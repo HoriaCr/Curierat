@@ -1,7 +1,11 @@
 #include <iostream>
+#include <sstream>
+#include <fstream>
 #include <vector>
 #include <queue>
+#include <algorithm>
 #include <stdexcept>
+#include <stack>
 
 #pragma once
 
@@ -9,39 +13,43 @@ using namespace std;
 
 class Graph
 {
-	protected:
-	
-		int vertexNumber;
-		int edgeNumber;
-		vector< vector<int> > data;
+protected:
 
-		void dfs(const int& v, const int& parent, vector<bool>& visited, vector<int>& ret);
-    
-		virtual void readData(istream& in);
+	int vertexNumber;
+	int edgeNumber;
+	vector< vector<int> > data;
 
-		virtual void writeData(ostream& out);    
+	void dfs(const int& v, const int& parent, vector<bool>& visited, vector<int>& ret);
 
-    public:
+	virtual void readData(istream& in);
 
-		Graph(int vertexNumber_);
-       
-        Graph(int vertexNumber_,int edgeNumber,const vector< pair<int,int> >& edges);
+	virtual void writeData(ostream& out);
 
-        virtual ~Graph();
+public:
 
-		int getVertexNumber() const;
+	Graph(int vertexNumber_);
 
-		virtual void addEdge(const int&x, const int& y);
+	Graph(int vertexNumber_, int edgeNumber, const vector< pair<int, int> >& edges);
 
-		vector<int> dfs(const int& root);
+	virtual ~Graph();
 
-		vector<int> bfs(const int& root);
+	int getVertexNumber() const;
 
-        bool isConnected();
+	virtual void addEdge(const int&x, const int& y);
 
-		friend istream& operator >> (istream& in, Graph& graph);
+	vector<int> dfs(const int& root);
 
-		friend ostream& operator << (ostream& out, Graph& graph);
+	vector<int> bfs(const int& root);
+
+	vector<int> getCriticalNodes();
+
+	vector< vector<int> > getBiconnectedComponents();
+
+	bool isConnected();
+
+	friend istream& operator >> (istream& in, Graph& graph);
+
+	friend ostream& operator << (ostream& out, Graph& graph);
 
 };
 
@@ -50,17 +58,17 @@ Graph::Graph(int vertexNumber_ = 0) {
 	data.resize(vertexNumber);
 }
 
-Graph::Graph(int vertexNumber_,int edgeNumber_,const vector< pair<int,int> >& edges) {
+Graph::Graph(int vertexNumber_, int edgeNumber_, const vector< pair<int, int> >& edges) {
 	vertexNumber = vertexNumber_;
-    edgeNumber = edgeNumber_;
+	edgeNumber = edgeNumber_;
 	data.resize(vertexNumber);
-    for (const auto& edge : edges) {
-        addEdge(edge.first, edge.second);
-    }
+	for (const auto& edge : edges) {
+		addEdge(edge.first, edge.second);
+	}
 }
 
 Graph::~Graph() {
-    vertexNumber = 0;
+	vertexNumber = 0;
 }
 
 int Graph::getVertexNumber() const {
@@ -121,13 +129,14 @@ void Graph::addEdge(const int& x, const int& y) {
 	}
 }
 
-void Graph::readData(istream& in) {	
+void Graph::readData(istream& in) {
 	in >> vertexNumber >> edgeNumber;
 	data.clear();
 	data.resize(vertexNumber);
 	int a, b;
 	for (int i = 0; i < edgeNumber; i++) {
-		cin >> a >> b;
+		in >> a >> b;
+		a--, b--;
 		addEdge(a, b);
 	}
 }
@@ -144,8 +153,8 @@ void Graph::writeData(ostream& out) {
 }
 
 bool Graph::isConnected() {
-    vector<int> nodes = bfs(0);
-    return (int)nodes.size() == vertexNumber;
+	vector<int> nodes = bfs(0);
+	return (int)nodes.size() == vertexNumber;
 }
 
 istream& operator >> (istream& in, Graph& graph) {
@@ -156,4 +165,133 @@ istream& operator >> (istream& in, Graph& graph) {
 ostream& operator << (ostream& out, Graph& graph) {
 	graph.writeData(out);
 	return out;
+}
+
+
+vector<int> Graph::getCriticalNodes() {
+	vector<int> criticalNodes;
+	if (vertexNumber == 0)
+		return criticalNodes;
+
+	vector<bool> visited(vertexNumber, false), isCriticalNode(vertexNumber, false);
+	vector<int> parent(vertexNumber, -1),
+		depth(vertexNumber, numeric_limits<int>::max()),
+		minSDepth(vertexNumber, numeric_limits<int>::max());
+
+	vector< vector<int>::iterator > nextNode(vertexNumber);
+	const int root = 0;
+	stack<int> s;
+	s.push(root);
+	depth[root] = 0;
+
+	while (!s.empty()){
+		int x = s.top();
+		s.pop();
+		if (!visited[x]){
+			visited[x] = true;
+			minSDepth[x] = depth[x];
+			nextNode[x] = begin(data[x]);
+		} else {
+			auto y = *(nextNode[x]++);
+			if (minSDepth[y] >= depth[x] && !isCriticalNode[x]){
+				isCriticalNode[x] = true;
+			}
+			minSDepth[x] = min(minSDepth[x], minSDepth[y]);
+		}
+
+		for (auto& it = nextNode[x]; it != end(data[x]); it++) {
+			auto& y = *it;
+			if (visited[y]) {
+				if (parent[x] != y)
+					minSDepth[x] = min(minSDepth[x], depth[y]);
+			} else {
+				s.push(x);
+				s.push(y);
+				parent[y] = x;
+				depth[y] = depth[x] + 1;
+				break;
+			}
+		}
+	}
+
+	int rootSons = 0;
+	for (auto& y : data[root]) {
+		if (parent[y] == root) {
+			++rootSons;
+		}
+	}
+
+	if (rootSons >= 2)
+		isCriticalNode[root] = 1;
+
+	for (int v = 0; v < vertexNumber; v++) {
+		if (isCriticalNode[v]) {
+			criticalNodes.push_back(v);
+		}
+	}
+
+	return criticalNodes;
+}
+
+vector< vector<int> > Graph::getBiconnectedComponents() {
+	vector<vector<int> > components;
+	if (vertexNumber == 0)
+		return components;
+
+	vector<bool> visited(vertexNumber, false);
+	vector<int> parent(vertexNumber, -1),
+		depth(vertexNumber, numeric_limits<int>::max()),
+		minSDepth(vertexNumber, numeric_limits<int>::max());
+
+	vector< vector<int>::iterator > nextNode(vertexNumber);
+	const int root = 0;
+	stack<int> s;
+	stack< pair<int, int> > edgeStack;
+	s.push(root);
+	depth[root] = 0;
+
+	while (!s.empty()){
+		int x = s.top();
+		s.pop();
+		if (!visited[x]){
+			visited[x] = true;
+			minSDepth[x] = depth[x];
+			nextNode[x] = begin(data[x]);
+		} else {
+			auto y = *(nextNode[x]++);
+			pair<int, int> edge;
+			minSDepth[x] = min(minSDepth[x], minSDepth[y]);
+			if (minSDepth[y] >= depth[x]) {
+				components.push_back(vector<int>());
+				do {
+					edge = edgeStack.top();
+					edgeStack.pop();
+					components.back().push_back(edge.first);
+					components.back().push_back(edge.second);
+				} while (x != edge.first || y != edge.second);
+			}
+		}
+
+		for (auto& it = nextNode[x]; it != end(data[x]); it++) {
+			auto& y = *it;
+			if (visited[y]) {
+				if (parent[x] != y)
+					minSDepth[x] = min(minSDepth[x], depth[y]);
+			} else {
+				s.push(x);
+				s.push(y);
+				edgeStack.push({ x, y });
+				parent[y] = x;
+				depth[y] = depth[x] + 1;
+				break;
+			}
+		}
+	}
+
+	for (auto& component : components) {
+		sort(component.begin(), component.end());
+		component.erase(unique(component.begin(), component.end()), component.end());
+	}
+
+	return components;
 }

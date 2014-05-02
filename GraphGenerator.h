@@ -24,9 +24,10 @@ class GraphGenerator {
             for (int i = 0; i < edgeNumber; i++) {
                 int a = rand() % vertexNumber;
                 int b = rand() % vertexNumber;
-                if (a != b && edges_.find({b, a}) == edges_.end()) {
-                    edges_.insert( {a, b} );
-                }
+				if (a == b) continue;
+				if (a > b) swap(a, b);
+				edges_.insert( {a, b} );
+             
             }
 
             vector< pair<int,int> > edges(edges_.begin(),edges_.end());

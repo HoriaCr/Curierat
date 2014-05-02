@@ -92,6 +92,7 @@
     <ClInclude Include="DeliveryFirm.h" />
     <ClInclude Include="DirectedGraph.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="GraphGenerator.h" />
     <ClInclude Include="Order.h" />
     <ClInclude Include="OrderGenerator.h" />
     <ClInclude Include="Scooter.h" />

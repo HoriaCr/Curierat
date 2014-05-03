@@ -55,15 +55,19 @@ vector<int> DirectedGraph::getTopologicalSort() {
 	return sortedOrder;
 }
 
+
 vector< vector<int> > DirectedGraph::getSCC() {
 	vector<vector<int> > components;
 	if (vertexNumber == 0)
 		return components;
 
 	vector<bool> inStack(vertexNumber, false);
+	vector< vector<int>::iterator > nextNode(vertexNumber);
 
 	vector<int> inTime(vertexNumber, -1),
-		lowlink(vertexNumber, -1);
+		lowlink(vertexNumber, -1), 
+		who(vertexNumber, -1);
+
 
 	stack<int> dfsStack, S;
 
@@ -77,16 +81,24 @@ vector< vector<int> > DirectedGraph::getSCC() {
 				S.push(v);
 				inStack[v] = true;
 				inTime[v] = lowlink[v] = indexCount++;
+				nextNode[v] = begin(data[v]);
+			} else 
+			if (who[v] != -1) {
+				auto& w = who[v];
+				if (inStack[w])
+					lowlink[v] = min(lowlink[v], lowlink[w]);
 			}
 
 			bool allDone = true;
 
-			for (auto& w : data[v]) {
+			while (allDone && nextNode[v] != end(data[v])) {
+				auto w = *(nextNode[v]++);
 				if (inStack[w])
 					lowlink[v] = min(lowlink[v], lowlink[w]);
 				else
 				if (allDone && inTime[w] == -1) {
 					dfsStack.push(w);
+					who[v] = w;
 					allDone = false;
 				}
 			}
